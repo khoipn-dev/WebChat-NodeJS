@@ -1,0 +1,22 @@
+{
+  "name": "webchat-nodejs",
+  "version": "1.0.0",
+  "description": "Web chat online using nodejs",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/khoipn-dev/WebChat-NodeJS.git"
+  },
+  "author": "KhoiPN",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/khoipn-dev/WebChat-NodeJS/issues"
+  },
+  "homepage": "https://github.com/khoipn-dev/WebChat-NodeJS#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
