@@ -1,5 +1,5 @@
 let getLoginRegister = function (req, res) {
-  res.render("auth/loginRegister");
+  res.render("auth/master");
 };
 
 module.exports = {
