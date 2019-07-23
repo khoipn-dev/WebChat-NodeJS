@@ -19,9 +19,11 @@
   "homepage": "https://github.com/khoipn-dev/WebChat-NodeJS#readme",
   "dependencies": {
     "bluebird": "^3.5.3",
+    "body-parser": "^1.19.0",
     "ejs": "^2.6.2",
     "express": "^4.17.1",
     "express-ejs-extend": "0.0.1",
+    "express-validator": "^6.1.1",
     "mongoose": "^5.6.6"
   },
   "devDependencies": {
