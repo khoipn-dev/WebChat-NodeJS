@@ -1,0 +1,21 @@
+{
+  "name": "web-chat",
+  "homepage": "https://fb.com/leeyanji.tb",
+  "authors": [
+    "KhoiPN <khoipn.dev@gmail.com>"
+  ],
+  "description": "Manage frontend libraries.",
+  "main": "src/server.js",
+  "license": "",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bower_components": "https://github.com/khoipn-dev/bower-library-web-chat.git"
+  }
+}
