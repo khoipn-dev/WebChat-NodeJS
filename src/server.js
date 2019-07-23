@@ -1,12 +1,13 @@
 import express from "express";
 import ConnectDB from "./config/connectDB";
+import configViewEngine from "./config/viewEngine";
 import initRoutes from "./route/web";
 
 let app = express();
 // Connect to MongoDB
 ConnectDB();
 // Config view engine
-app.set("view engine", "ejs");
+configViewEngine(app);
 //Init all route
 initRoutes(app);
 

@@ -1,5 +1,5 @@
 let getHome = function (req, res) {
-  res.render("main/index");
+  res.render("main/master");
 };
 
 module.exports = {
