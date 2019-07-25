@@ -5,6 +5,7 @@ import initRoutes from "./route/web";
 import bodyParser from "body-parser";
 import connectFlash from "connect-flash";
 import configSession from "./config/session";
+import passport from "passport";
 
 let app = express();
 // Connect to MongoDB
@@ -21,6 +22,10 @@ app.use(bodyParser.urlencoded({extended: true}));
 
 //Enable flash message
 app.use(connectFlash());
+
+//Config passport
+app.use(passport.initialize());
+app.use(passport.session());
 
 //Init all route
 initRoutes(app);
