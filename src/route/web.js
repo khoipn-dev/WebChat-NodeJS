@@ -15,17 +15,18 @@ let route = express.Router();
  */
 
 let initRoutes = (app) => {
-  route.get("/", home.getHome);
-  route.get("/login-register", auth.getLoginRegister);
+  route.get("/login-register", auth.checkLogout, auth.getLoginRegister);
   // Vào authValid.register trước và trả về kết quả validate
-  route.post("/register", authValid.register, auth.postRegister);
-  route.get("/verify/:token", auth.verifyAccount);
-  route.post("/login", passport.authenticate("local", {
+  route.post("/register", auth.checkLogout, authValid.register, auth.postRegister);
+  route.get("/verify/:token", auth.checkLogout, auth.verifyAccount);
+  route.post("/login", auth.checkLogout, passport.authenticate("local", {
     successRedirect: "/",
     failureRedirect: "/login-register",
     successFlash: true,
     failureFlash:true
-  }))
+  }));
+  route.get("/", auth.checkLogin, home.getHome);
+  route.get("/logout", auth.checkLogin, auth.getLogout);
 
   return app.use("/", route);
 }
