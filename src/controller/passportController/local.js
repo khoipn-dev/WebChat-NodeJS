@@ -40,6 +40,8 @@ let initPassportLocal = () => {
     done(null, user._id);
   });
 
+  // Được gọi bởi passport.session()
+  // return userInfo gán vào req.user 
   passport.deserializeUser((id, done) => {
     UserModel.findUserById(id)
       .then(user => {
