@@ -1,12 +1,13 @@
 import UserModel from "./../model/userModel";
 import bcrypt from "bcrypt";
 import uuidv4 from "uuid/v4";
-import {transError, transSuccess} from "./../../lang/vi";
+import {transError, transSuccess, transMail} from "./../../lang/vi";
+import sendMail from "./../config/mailer";
 
 let saltRounds = 7;
 
 
-let register = async (email, gender, password) => {
+let register = async (email, gender, password, protocol, host) => {
   return new Promise( async (resolve, reject) => {
     let userByEmail = await UserModel.findByEmail(email);
     // Nếu email đã đăng ký
@@ -33,10 +34,33 @@ let register = async (email, gender, password) => {
       }
     };
     let user = await UserModel.createNew(userItem);
+    let linkVerify = `${protocol}://${host}/verify/${user.local.verifyToken}`;
+    sendMail(user.local.email, transMail.subject, transMail.template(linkVerify))
+      .then(success => {
+        resolve(transSuccess.userCreated(user.local.email));
+      })
+      .catch(async error => {
+        //send mail failed
+        await UserModel.removeById(user._id);
+        console.log(error);
+        reject(transMail.send_failed);
+      })
     resolve(transSuccess.userCreated(user.local.email));
   });
 };
 
+let verifyAccount = (token) => {
+  return new Promise(async (resolve, reject) => {
+    let userByToken = await UserModel.findByToken(token);
+    if (!userByToken) {
+      return reject(transError.token_undefined);
+    }
+    await UserModel.verify(token);
+    resolve(transSuccess.account_actived);
+  });
+};
+
 module.exports = {
-  register: register
+  register: register,
+  verifyAccount: verifyAccount
 };

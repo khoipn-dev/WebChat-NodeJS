@@ -14,6 +14,7 @@ let initRoutes = (app) => {
   route.get("/login-register", auth.getLoginRegister);
   // Vào authValid.register trước và trả về kết quả validate
   route.post("/register", authValid.register, auth.postRegister);
+  route.get("/verify/:token", auth.verifyAccount);
 
   return app.use("/", route);
 }
