@@ -9,7 +9,7 @@ import passport from "passport";
 //Khởi tạo passport
 initPassportLocal();
 initPassportFacebook();
-// initPassportGoogle();
+initPassportGoogle();
 
 let route = express.Router();
 
@@ -47,7 +47,7 @@ let initRoutes = (app) => {
   }));
 
   //Đăng nhập google
-  route.get("/auth/google", auth.checkLogout, passport.authenticate("google", {scope: ["email"]}));
+  route.get("/auth/google", auth.checkLogout, passport.authenticate("google", {scope: ["email", "profile", "openid"]}));
   route.get("/auth/google/callback", auth.checkLogout, passport.authenticate("google", {
     successRedirect: "/",
     failureRedirect: "/login-register"
