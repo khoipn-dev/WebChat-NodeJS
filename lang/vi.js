@@ -11,7 +11,9 @@ export const transError = {
   account_removed: "Email này đã bị gỡ khỏi hệ thống, nếu là hiểu nhầm vui lòng liên hệ với bộ phận hỗ trợ của chúng tôi",
   token_undefined: "Token không hợp lệ",
   login_failed: "Tài khoản hoặc mật khẩu không hợp lệ",
-  server_error: "Có lỗi ở phía server. Vui lòng liên hệ với bộ phận hỗ trợ của chúng tôi. Xin cảm ơn"
+  server_error: "Có lỗi ở phía server. Vui lòng liên hệ với bộ phận hỗ trợ của chúng tôi. Xin cảm ơn",
+  avatar_type: "Kiểu file không hợp lệ. Chỉ chấp nhận png & jpg",
+  avatar_size: "Tối đa cho phép là 1MB",
 };
 
 export const transSuccess = {
@@ -22,7 +24,8 @@ export const transSuccess = {
   login_success: (username) => {
     return `Xin chào ${username}, chúc bạn một ngày tốt lành`;
   },
-  logout_success: "Đăng xuất thành công. Hẹn gặp lại bạn!"
+  logout_success: "Đăng xuất thành công. Hẹn gặp lại bạn!",
+  avatar_updated: "Cập nhật ảnh đại diện thành công",
 };
 
 export const transMail = {
