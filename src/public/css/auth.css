@@ -1,11 +1,11 @@
 /*
  *
  * login-register modal css
- * https://trungquandev.com
+ *
  *
 /*  Shake animation  */
 
-@import url(https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,600);
+@import url('https://fonts.googleapis.com/css?family=Quicksand&display=swap');
 
 /* @charset "UTF-8"; */
 
@@ -17,7 +17,7 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility;
-  font-family: 'Source Sans Pro', sans-serif;
+  font-family: 'Quicksand', sans-serif;
   font-weight: 400;
   background-image: url("../images/background/image.jpg");
   background-size: cover;
