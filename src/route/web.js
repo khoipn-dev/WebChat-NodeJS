@@ -9,7 +9,7 @@ import passport from "passport";
 //Khởi tạo passport
 initPassportLocal();
 initPassportFacebook();
-initPassportGoogle();
+// initPassportGoogle();
 
 let route = express.Router();
 
