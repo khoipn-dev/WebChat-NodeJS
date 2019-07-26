@@ -80,28 +80,43 @@ $(document).ready(function() {
       alertify.notify("Bạn phải thay đổi thông tin trước khi cập nhật dữ liệu", "error", 7);
       return false;
     }
-
+    // Gửi request cập nhật avatar
     $.ajax({
       url: "/user/update-avatar",
-      type: "put",
+      type: "PUT",
       cache: false,
       contentType: false,
       processData: false,
       data: userAvatar,
       success: function (result) {
-        //
+        // Hiển thị thônng báo thành công
+        $(".user-modal-alert-success").find("span").text(result.message);
+        $(".user-modal-alert-success").css("display", "block");
+
+        // Cập nhật avatar ở navbar
+        $("#navbar-avatar").attr("src", result.imageSrc);
+
+        // Cập nhật origin src avatar
+        originAvatarSrc = result.imageSrc;
+
+        // Reset input file avatar
+        $("#input-change-avatar").val(null);
       },
       error: function (error) {
-        //
+        // Hiển thị lỗi
+        $(".user-modal-alert-error").find("span").text(error.responseText);
+        $(".user-modal-alert-error").css("display", "block");
+
+        //reset all
+        $("#input-btn-cancel-update-user").click();
       }
     });
-    // console.log(userAvatar);
-    // console.log(userInfo);
   });
 
   $("#input-btn-cancel-update-user").bind("click", function () {
     userAvatar = null;
     userInfo = {};
+    $("#input-change-avatar").val(null);
     $("#user-modal-avatar").attr("src", originAvatarSrc);
   });
 
