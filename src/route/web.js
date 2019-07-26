@@ -58,7 +58,8 @@ let initRoutes = (app) => {
   
   // Cập nhật thông tin nguời dùng
   route.put("/user/update-avatar", auth.checkLogin, user.updateAvatar);
-  route.put("/user/update-info", userValid.updateInfo, auth.checkLogin, user.updateInfo);
+  route.put("/user/update-info", auth.checkLogin, userValid.updateInfo, user.updateInfo);
+  route.put("/user/update-password", auth.checkLogin, userValid.updatePassword, user.updatePassword);
   
 
   return app.use("/", route);
