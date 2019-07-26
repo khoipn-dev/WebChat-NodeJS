@@ -1,6 +1,6 @@
 import express from "express";
 import {home, auth, user} from "./../controller/index";
-import {authValid} from "./../validation/index";
+import {authValid, userValid} from "./../validation/index";
 import initPassportLocal from "./../controller/passportController/local";
 import initPassportFacebook from "./../controller/passportController/facebook";
 import initPassportGoogle from "./../controller/passportController/google";
@@ -9,7 +9,7 @@ import passport from "passport";
 //Khởi tạo passport
 initPassportLocal();
 initPassportFacebook();
-// initPassportGoogle();
+initPassportGoogle();
 
 let route = express.Router();
 
@@ -47,7 +47,7 @@ let initRoutes = (app) => {
   }));
 
   //Đăng nhập google
-  route.get("/auth/google", auth.checkLogout, passport.authenticate("google", {scope: ["email"]}));
+  route.get("/auth/google", auth.checkLogout, passport.authenticate("google", {scope: ["email", "profile", "openid"]}));
   route.get("/auth/google/callback", auth.checkLogout, passport.authenticate("google", {
     successRedirect: "/",
     failureRedirect: "/login-register"
@@ -56,7 +56,9 @@ let initRoutes = (app) => {
   // Đăng xuất
   route.get("/logout", auth.checkLogin, auth.getLogout);
   
+  // Cập nhật thông tin nguời dùng
   route.put("/user/update-avatar", auth.checkLogin, user.updateAvatar);
+  route.put("/user/update-info", userValid.updateInfo, auth.checkLogin, user.updateInfo);
   
 
   return app.use("/", route);
