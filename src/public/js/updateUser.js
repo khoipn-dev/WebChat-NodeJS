@@ -8,7 +8,7 @@ function updateUserInfo() {
   $("#input-change-avatar").bind("change", function () {
     let fileData = $(this).prop("files")[0];
     let math = ["image/png", "image/jpg", "image/jpeg"];
-    let limit = 10485763; //byte = 1MB
+    let limit = 1000000; //byte = 1MB
 
     if ($.inArray(fileData.type, math) === -1) {
       alertify.notify("Kiểu file không hợp lệ. Chỉ chấp nhận png & jpg", "error", 7);
