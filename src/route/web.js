@@ -1,6 +1,6 @@
 import express from "express";
-import {home, auth, user} from "./../controller/index";
-import {authValid, userValid} from "./../validation/index";
+import {home, auth, user, contact} from "./../controller/index";
+import {authValid, userValid, contactValid} from "./../validation/index";
 import initPassportLocal from "./../controller/passportController/local";
 import initPassportFacebook from "./../controller/passportController/facebook";
 import initPassportGoogle from "./../controller/passportController/google";
@@ -61,7 +61,8 @@ let initRoutes = (app) => {
   route.put("/user/update-info", auth.checkLogin, userValid.updateInfo, user.updateInfo);
   route.put("/user/update-password", auth.checkLogin, userValid.updatePassword, user.updatePassword);
   
-
+  // Tìm kiếm thêm bạn bè
+  route.get("/contact/find-user/:keyword", auth.checkLogin, contactValid.findUserContact, contact.findUserContact);
   return app.use("/", route);
 }
  module.exports = initRoutes;

@@ -1,3 +1,5 @@
+import dotenv from 'dotenv'
+dotenv.config(".env");
 import express from "express";
 import ConnectDB from "./config/connectDB";
 import configViewEngine from "./config/viewEngine";
@@ -8,7 +10,6 @@ import configSession from "./config/session";
 import passport from "passport";
 import https from "https";
 import pem from "pem";
-
 
 // pem.createCertificate({ days: 1, selfSigned: true }, function (err, keys) {
 //   if (err) {
