@@ -5,10 +5,10 @@ let Schema = mongoose.Schema;
 let ContactSchema = new Schema({
   userId: String,
   contactId: String,
-  status: {type: Boolean, default: false},
-  createdAt: {type: Number, default: Date.now},
-  updatedAt: {type: Number, default: null},
-  deleteAt: {type: Number, default: null}
+  status: { type: Boolean, default: false },
+  createdAt: { type: Number, default: Date.now },
+  updatedAt: { type: Number, default: null },
+  deleteAt: { type: Number, default: null }
 });
 
 ContactSchema.statics = {
@@ -18,10 +18,30 @@ ContactSchema.statics = {
 
   findAllByUser(userId) {
     return this.find({
+      $or: [{ userId: userId }, { contactId: userId }]
+    }).exec();
+  },
+  /**
+   * Kiểm tra 2 user đã là bạn bè chưa
+   * @param {string} userId
+   * @param {string} contactId
+   */
+  checkExists(userId, contactId) {
+    return this.findOne({
       $or: [
-        {"userId": userId},
-        {"contactId": userId}
+        { $and: [{ userId: userId }, { contactId: contactId }] },
+        { $and: [{ userId: contactId }, { contactId: userId }] }
       ]
+    }).exec();
+  },
+  /**
+   * Xoá bản ghi contact
+   * @param {string} userId
+   * @param {string} contactId
+   */
+  removeRequest(userId, contactId) {
+    return this.deleteOne({
+      $and: [{ userId: userId }, { contactId: contactId }]
     }).exec();
   }
 };

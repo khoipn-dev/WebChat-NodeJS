@@ -89,10 +89,10 @@ UserSchema.statics = {
           { "local.isActive": true },
           {
             $or: [
-              { "username": { "$regex": keyword } },
-              { "local.email": { "$regex": keyword } },
-              { "google.email": { "$regex": keyword } },
-              { "facebook.email": { "$regex": keyword } }
+              { username: { $regex: new RegExp(keyword, "i") } },
+              { "local.email": keyword },
+              { "google.email": keyword },
+              { "facebook.email": keyword }
             ]
           }
         ]
