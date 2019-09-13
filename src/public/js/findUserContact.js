@@ -6,7 +6,7 @@ $(document).ready(function() {
 function callFindUser(event) {
   if(event.which === 13 || event.type === "click") {
     let keyword = $("#input-find-user-contact").val();
-    let regexKeyword = new RegExp(/^[\s0-9a-zA-Z_ÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂưăạảấầẩẫậắằẳẵặẹẻẽềềểỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸửữựỳỵỷỹ ]+$/);
+    let regexKeyword = new RegExp(/^[\s0-9a-zA-Z_ÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂưăạảấầẩẫậắằẳẵặẹẻẽềềểỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸửữựỳỵỷỹ \@\.]+$/);
 
     if (!keyword.length) {
       alertify.notify("Chưa nhập nội dung tìm kiếm ", "error", 5);
@@ -20,8 +20,8 @@ function callFindUser(event) {
 
     $.get(`/contact/find-user/${keyword}`, function (data) {
       $("#find-user ul").html(data);
+      addContact(); //addContact.js
+      removeRequestContact() // removeRequestContact.js
     });
-
-    console.log(keyword);
   }
 }

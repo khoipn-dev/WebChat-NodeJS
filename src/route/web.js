@@ -63,6 +63,9 @@ let initRoutes = (app) => {
   
   // Tìm kiếm thêm bạn bè
   route.get("/contact/find-user/:keyword", auth.checkLogin, contactValid.findUserContact, contact.findUserContact);
+  route.post("/contact/add-new", auth.checkLogin, contact.addNew);
+  route.delete("/contact/remove-request-contact", auth.checkLogin, contact.removeRequest);
+  
   return app.use("/", route);
 }
  module.exports = initRoutes;
