@@ -10,6 +10,8 @@ function addContact() {
           .find(`div.user-remove-request-contact[data-uid = ${targetId}]`)
           .css("display", "inline-block");
         increaseNumberNotiContact("count-request-contact-sent"); //calculateNotiContact.js
+        
+        socket.emit("add-new-contact", {contactId: targetId});
       }
     });
   });
