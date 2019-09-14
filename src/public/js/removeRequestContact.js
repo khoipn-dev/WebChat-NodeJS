@@ -15,8 +15,18 @@ function removeRequestContact() {
             .find(`div.user-add-new-contact[data-uid = ${targetId}]`)
             .css("display", "inline-block");
           decreaseNumberNotiContact("count-request-contact-sent"); //calculateNotiContact.js
+          
+          socket.emit("remove-request-contact", {contactId: targetId});
         }
       }
     });
   });
-}
+};
+
+socket.on("response-remove-request-contact", (user) => {
+  
+  $(".noti_content").find(`span[data-uid = ${user.id}]`).remove();
+  decreaseNumberNotiContact("count-request-contact-received");
+  decreaseNumberNotiContactNavbar("noti_contact_counter");
+  decreaseNumberNotiContactNavbar("noti_counter");
+});
