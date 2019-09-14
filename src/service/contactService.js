@@ -1,5 +1,6 @@
 import ContactModel from "./../model/contactModel";
 import UserModel from "./../model/userModel";
+import NotificationModel from "./../model/notificationModel";
 import _ from "lodash";
 
 let findUserContact = (currentUserId, keyword) => {
@@ -30,12 +31,23 @@ let addNew = (currentUserId, contactId) => {
       reject(false);
     }
 
+
+    // Tạo contact
     let newContactItem = {
       userId: currentUserId,
       contactId: contactId
     }
-
     let newContact = await ContactModel.createNew(newContactItem);
+
+    // Tạo notification
+    let newNotificationItem = {
+      senderID: currentUserId,
+      receiverID: contactId,
+      type: NotificationModel.types.ADD_CONTACT
+    };
+
+    await NotificationModel.model.createNew(newNotificationItem);
+
     resolve(newContact);
   });
 };
@@ -47,6 +59,9 @@ let removeRequest = (currentUserId, contactId) => {
     if (removeReq.n === 0) {
       reject(false);
     }
+
+    // Xoá notification
+    await NotificationModel.model.removeRequestContactNotification(currentUserId, contactId, NotificationModel.types.ADD_CONTACT);
     resolve(true);
   });
 };
