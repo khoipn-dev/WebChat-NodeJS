@@ -1,5 +1,4 @@
 import mongoose from "mongoose";
-import { notification } from "../service";
 
 let Schema = mongoose.Schema;
 
@@ -35,13 +34,26 @@ NotificationSchema.statics = {
   },
   countNotiUnread(userID) {
     return this.countDocuments({
-      $and: [
-        {receiverID: userID},
-        {isRead: false}
-      ]
+      $and: [{ receiverID: userID }, { isRead: false }]
     }).exec();
   },
-  
+
+  /**
+   *
+   * @param {string} userID
+   * @param {number} skipNumber
+   * @param {number} limit
+   */
+
+  readMore(userID, skipNumber, limit) {
+    return this.find({
+      receiverID: userID
+    })
+      .sort({ createdAt: -1 })
+      .skip(skipNumber)
+      .limit(limit)
+      .exec();
+  }
 };
 
 const NOTIFICATION_TYPES = {
@@ -52,20 +64,20 @@ const NOTIFICATION_CONTENTS = {
   getContent: (notificationType, isRead, sender) => {
     if (notificationType === NOTIFICATION_TYPES.ADD_CONTACT) {
       if (!isRead) {
-        return `<div class="noti-readed-false" data-uid="${ sender._id }">
-              <img class="avatar-small" src="images/users/${ sender.avatar }" alt=""> 
-              <strong>${ sender.username }</strong> đã gửi cho bạn lời mời kết bạn!
+        return `<div class="noti-readed-false" data-uid="${sender._id}">
+              <img class="avatar-small" src="images/users/${sender.avatar}" alt=""> 
+              <strong>${sender.username}</strong> đã gửi cho bạn lời mời kết bạn!
             </div>`;
       }
-      return `<div data-uid="${ sender._id }">
-              <img class="avatar-small" src="images/users/${ sender.avatar }" alt=""> 
-              <strong>${ sender.username }</strong> đã gửi cho bạn lời mời kết bạn!
+      return `<div data-uid="${sender._id}">
+              <img class="avatar-small" src="images/users/${sender.avatar}" alt=""> 
+              <strong>${sender.username}</strong> đã gửi cho bạn lời mời kết bạn!
             </div>`;
     }
 
     return "No matching with any notification type.";
   }
-}
+};
 
 module.exports = {
   model: mongoose.model("notification", NotificationSchema),
