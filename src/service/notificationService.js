@@ -24,6 +24,22 @@ let getNotifications = (currentUserID, limit = 10) => {
   });
 };
 
+/**
+ * Lấy tổng thông báo chưa đọc
+ * @param {string} currentUserID
+ */
+let countNotiUnread = (currentUserID) => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      let notificationsUnread = await NotificationModel.model.countNotiUnread(currentUserID);
+      resolve(notificationsUnread);
+    } catch (error) {
+      reject(error);
+    }
+  });
+};
+
 module.exports = {
-  getNotifications
+  getNotifications,
+  countNotiUnread
 };
