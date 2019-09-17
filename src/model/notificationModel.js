@@ -53,6 +53,23 @@ NotificationSchema.statics = {
       .skip(skipNumber)
       .limit(limit)
       .exec();
+  },
+  
+  /**
+   * 
+   * @param {string} userID 
+   * @param {array} targetUsers 
+   */
+  markAllNotificationAsRead(userID, targetUsers) {
+    return this.updateMany({
+      $and: [{
+        receiverID: userID
+      },{
+        senderID: {$in: targetUsers}
+      }]
+    }, {
+      isRead: true
+    }).exec();
   }
 };
 
