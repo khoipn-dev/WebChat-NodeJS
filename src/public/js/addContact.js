@@ -26,6 +26,6 @@ socket.on("response-add-new-contact", (user) => {
   $("ul.list-notifications").prepend(`<li>${noti}</li>`);
   
   increaseNumberNotiContact("count-request-contact-received");
-  increaseNumberNotiContactNavbar("noti_contact_counter");
-  increaseNumberNotiContactNavbar("noti_counter");
+  increaseNumberNotification("noti_contact_counter", 1);
+  increaseNumberNotification("noti_counter", 1);
 })
