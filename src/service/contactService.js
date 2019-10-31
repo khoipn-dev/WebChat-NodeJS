@@ -117,6 +117,39 @@ let getContactsReceived = (currentUserId) => {
   });
 };
 
+let countContacts = (currentUserId) => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      let count = await ContactModel.countContacts(currentUserId);
+      resolve(count);
+    } catch (error) {
+      reject(error);
+    }
+  });
+};
+
+let countContactsSent = (currentUserId) => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      let count = await ContactModel.countContactsSent(currentUserId);
+      resolve(count);
+    } catch (error) {
+      reject(error);
+    }
+  });
+};
+
+let countContactsReceived = (currentUserId) => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      let count = await ContactModel.countContactsReceived(currentUserId);
+      resolve(count);
+    } catch (error) {
+      reject(error);
+    }
+  });
+};
+
 module.exports = {
   findUserContact,
   addNew,
@@ -124,4 +157,7 @@ module.exports = {
   getContacts,
   getContactsSent,
   getContactsReceived,
+  countContacts: countContacts,
+  countContactsSent: countContactsSent,
+  countContactsReceived: countContactsReceived,
 };

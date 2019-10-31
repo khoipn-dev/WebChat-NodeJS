@@ -35,6 +35,9 @@ let getHome = async function(req, res) {
     contacts: contacts,
     contactsSent: contactsSent,
     contactsReceived: contactsReceived,
+    countContacts: countContacts,
+    countContactsSent: countContactsSent,
+    countContactsReceived: countContactsReceived,
   });
 };
 
