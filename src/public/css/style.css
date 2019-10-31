@@ -198,7 +198,6 @@ label:focus,
 .contactPanel .user-remove-contact,
 .contactPanel .user-remove-request-contact,
 .contactPanel .user-acccept-contact-received,
-.contactPanel .user-remove-request-sent,
 .contactPanel .user-reject-request-contact-received {
   box-sizing: border-box;
   display: inline-flex;
@@ -1610,4 +1609,8 @@ label:focus,
   100% {
     transform: rotate(360deg);
   }
+}
+
+.display-important {
+  display: inline-block !important;
 }

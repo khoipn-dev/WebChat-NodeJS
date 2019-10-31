@@ -1,5 +1,5 @@
 function removeRequestContact() {
-  $(".user-remove-request-contact").bind("click", function() {
+  $(".user-remove-request-contact").unbind("click").on("click", function() {
     let targetId = $(this).data("uid");
 
     $.ajax({
@@ -23,7 +23,7 @@ function removeRequestContact() {
       }
     });
   });
-};
+}
 
 socket.on("response-remove-request-contact", (user) => {
   
@@ -35,4 +35,8 @@ socket.on("response-remove-request-contact", (user) => {
   decreaseNumberNotiContact("count-request-contact-received");
   decreaseNumberNotification("noti_contact_counter", 1);
   decreaseNumberNotification("noti_counter", 1);
+});
+
+$(document).ready(function () {
+  removeRequestContact();
 });
