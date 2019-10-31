@@ -14,6 +14,8 @@ function addContact() {
         let userInfoHtml = $("#find-user").find(`ul li[data-uid = ${targetId}]`).get(0).outerHTML;
         $("#request-contact-sent").find(`ul`).prepend(userInfoHtml);
 
+        removeRequestContact(); // removeRequestContact.js
+
         socket.emit("add-new-contact", {contactId: targetId});
       }
     });

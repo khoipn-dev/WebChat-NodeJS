@@ -29,12 +29,14 @@ $(document).ready(function() {
                                       <div class="user-address">
                                           <span>&nbsp ${(user.address !== null ? user.address : "")}</span>
                                       </div>
-                                      <div class="user-remove-request-sent action-danger" data-uid="${user._id}">
+                                      <div class="user-remove-request-contact action-danger display-important" data-uid="${user._id}">
                                           Hủy yêu cầu
                                       </div>
                                   </div>
                               </li>`);
             });
+
+            removeRequestContact(); // removeRequestContact.js
 
             $("#link-read-more-contacts-sent").css("display", "inline-block");
             $(".read-more-loader-contacts-sent").css("display", "none");
