@@ -69,7 +69,7 @@ ContactSchema.statics = {
   },
 
   countContacts(userId) {
-    return this.count({
+    return this.countDocuments({
       $and: [
         {$or: [
             {userId: userId},
@@ -80,16 +80,40 @@ ContactSchema.statics = {
   },
 
   countContactsSent(userId) {
-    return this.count({
+    return this.countDocuments({
       $and: [{userId: userId}, {status: false}]
     }).exec();
   },
 
   countContactsReceived(userId) {
-    return this.count({
+    return this.countDocuments({
       $and: [{contactId: userId}, {status: false}]
     }).exec();
   },
+
+  readMoreContacts(userId, skipNumber, limit) {
+    return this.find({
+      $and: [
+        {$or: [
+            {userId: userId},
+            {contactId: userId}
+          ]}
+        , {status: true}]
+    }).sort({createdAt: -1}).skip(skipNumber).limit(limit).exec();
+  },
+
+  readMoreContactsSent(userId, skipNumber, limit) {
+    return this.find({
+      $and: [{userId: userId}, {status: false}]
+    }).sort({createdAt: -1}).skip(skipNumber).limit(limit).exec();
+  },
+
+  readMoreContactsReceived(userId, skipNumber, limit) {
+    return this.find({
+      $and: [{contactId: userId}, {status: false}]
+    }).sort({createdAt: -1}).skip(skipNumber).limit(limit).exec();
+  },
+
 };
 
 module.exports = mongoose.model("contact", ContactSchema);

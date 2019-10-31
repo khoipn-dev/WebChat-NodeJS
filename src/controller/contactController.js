@@ -1,4 +1,4 @@
-import { contact } from "./../service";
+import {contact, notification} from "./../service";
 import { validationResult } from "express-validator/check";
 
 let findUserContact = async (req, res) => {
@@ -49,10 +49,43 @@ let removeRequest = async (req, res) => {
   } catch (error) {
     return res.status(500).send(error);
   }
-}
+};
+
+let readMoreContacts = async (req, res) => {
+  try {
+    let skipNumber = +(req.query.skipNumber);
+    let nextContacts = await contact.readMoreContacts(req.user._id, skipNumber);
+    return res.status(200).send(nextContacts);
+  } catch (error) {
+    return res.status(500).send(error);
+  }
+};
+
+let readMoreContactsSent = async (req, res) => {
+  try {
+    let skipNumber = +(req.query.skipNumber);
+    let nextContactsSent = await contact.readMoreContactsSent(req.user._id, skipNumber);
+    return res.status(200).send(nextContactsSent);
+  } catch (error) {
+    return res.status(500).send(error);
+  }
+};
+
+let readMoreContactsReceived = async (req, res) => {
+  try {
+    let skipNumber = +(req.query.skipNumber);
+    let nextContactsReceived = await contact.readMoreContactsReceived(req.user._id, skipNumber);
+    return res.status(200).send(nextContactsReceived);
+  } catch (error) {
+    return res.status(500).send(error);
+  }
+};
 
 module.exports = {
   findUserContact,
   addNew,
-  removeRequest
+  removeRequest,
+  readMoreContacts,
+  readMoreContactsSent,
+  readMoreContactsReceived
 };

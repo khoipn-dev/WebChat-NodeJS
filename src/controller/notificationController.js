@@ -9,7 +9,7 @@ let readMore = async (req, res) => {
   } catch (error) {
     return res.status(500).send(error);
   }
-}
+};
 
 let markAllNotificationAsRead = async (req, res) => {
   try {
@@ -18,9 +18,9 @@ let markAllNotificationAsRead = async (req, res) => {
   } catch (error) {
     return res.status(500).send(error);
   }
-}
+};
 
 module.exports = {
   readMore,
   markAllNotificationAsRead
-}
+};

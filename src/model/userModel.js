@@ -52,6 +52,10 @@ UserSchema.statics = {
     return this.findById(id).exec();
   },
 
+  getUserData(id) {
+    return this.findById(id, {_id: 1, username: 1, address: 1, avatar: 1}).exec();
+  },
+
   verify(token) {
     return this.findOneAndUpdate(
       { "local.verifyToken": token },
@@ -97,12 +101,7 @@ UserSchema.statics = {
           }
         ]
       },
-      {
-        _id: 1,
-        username: 1,
-        address: 1,
-        avatar: 1
-      }
+      {_id: 1, username: 1, address: 1, avatar: 1}
     ).exec();
   }
 };

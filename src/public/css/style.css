@@ -1285,9 +1285,14 @@ label:focus,
   margin-right: 20px;
 }
 
-.read-more-notif {
+.read-more-notif,
+.read-more-contacts,
+.read-more-contacts-sent,
+.read-more-contacts-received {
   text-align: center;
 }
+
+/*loader notification*/
 
 .read-more-loader {
   display: none;
@@ -1337,6 +1342,180 @@ label:focus,
   }
 }
 @keyframes read-more-loader2 {
+  0% {
+    transform: translate(0, 0);
+  }
+  100% {
+    transform: translate(19px, 0);
+  }
+}
+
+/*loader contacts*/
+
+.read-more-loader-contacts {
+  display: none;
+  position: relative;
+  width: 64px;
+  height: 64px;
+}
+.read-more-loader-contacts div {
+  position: absolute;
+  top: 27px;
+  width: 11px;
+  height: 11px;
+  border-radius: 50%;
+  background: #34495e;
+  animation-timing-function: cubic-bezier(0, 1, 1, 0);
+}
+.read-more-loader-contacts div:nth-child(1) {
+  left: 6px;
+  animation: read-more-loader1 0.6s infinite;
+}
+.read-more-loader-contacts div:nth-child(2) {
+  left: 6px;
+  animation: read-more-loader-contacts2 0.6s infinite;
+}
+.read-more-loader-contacts div:nth-child(3) {
+  left: 26px;
+  animation: read-more-loader-contacts2 0.6s infinite;
+}
+.read-more-loader-contacts div:nth-child(4) {
+  left: 45px;
+  animation: read-more-loader-contacts3 0.6s infinite;
+}
+@keyframes read-more-loader-contacts1 {
+  0% {
+    transform: scale(0);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+@keyframes read-more-loader-contacts3 {
+  0% {
+    transform: scale(1);
+  }
+  100% {
+    transform: scale(0);
+  }
+}
+@keyframes read-more-loader-contacts2 {
+  0% {
+    transform: translate(0, 0);
+  }
+  100% {
+    transform: translate(19px, 0);
+  }
+}
+
+/*loader contact sent*/
+
+.read-more-loader-contacts-sent {
+  display: none;
+  position: relative;
+  width: 64px;
+  height: 64px;
+}
+.read-more-loader-contacts-sent div {
+  position: absolute;
+  top: 27px;
+  width: 11px;
+  height: 11px;
+  border-radius: 50%;
+  background: #34495e;
+  animation-timing-function: cubic-bezier(0, 1, 1, 0);
+}
+.read-more-loader-contacts-sent div:nth-child(1) {
+  left: 6px;
+  animation: read-more-loader1 0.6s infinite;
+}
+.read-more-loader-contacts-sent div:nth-child(2) {
+  left: 6px;
+  animation: read-more-loader-contacts-sent2 0.6s infinite;
+}
+.read-more-loader-contacts-sent div:nth-child(3) {
+  left: 26px;
+  animation: read-more-loader-contacts-sent2 0.6s infinite;
+}
+.read-more-loader-contacts-sent div:nth-child(4) {
+  left: 45px;
+  animation: read-more-loader-contacts-sent3 0.6s infinite;
+}
+@keyframes read-more-loader-contacts-sent1 {
+  0% {
+    transform: scale(0);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+@keyframes read-more-loader-contacts-sent3 {
+  0% {
+    transform: scale(1);
+  }
+  100% {
+    transform: scale(0);
+  }
+}
+@keyframes read-more-loader-contacts-sent2 {
+  0% {
+    transform: translate(0, 0);
+  }
+  100% {
+    transform: translate(19px, 0);
+  }
+}
+
+/*loader contact received*/
+
+.read-more-loader-contacts-received {
+  display: none;
+  position: relative;
+  width: 64px;
+  height: 64px;
+}
+.read-more-loader-contacts-received div {
+  position: absolute;
+  top: 27px;
+  width: 11px;
+  height: 11px;
+  border-radius: 50%;
+  background: #34495e;
+  animation-timing-function: cubic-bezier(0, 1, 1, 0);
+}
+.read-more-loader-contacts-received div:nth-child(1) {
+  left: 6px;
+  animation: read-more-loader1 0.6s infinite;
+}
+.read-more-loader-contacts-received div:nth-child(2) {
+  left: 6px;
+  animation: read-more-loader-contacts-received2 0.6s infinite;
+}
+.read-more-loader-contacts-received div:nth-child(3) {
+  left: 26px;
+  animation: read-more-loader-contacts-received2 0.6s infinite;
+}
+.read-more-loader-contacts-received div:nth-child(4) {
+  left: 45px;
+  animation: read-more-loader-contacts-received3 0.6s infinite;
+}
+@keyframes read-more-loader-contacts-received1 {
+  0% {
+    transform: scale(0);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+@keyframes read-more-loader-contacts-received3 {
+  0% {
+    transform: scale(1);
+  }
+  100% {
+    transform: scale(0);
+  }
+}
+@keyframes read-more-loader-contacts-received2 {
   0% {
     transform: translate(0, 0);
   }
