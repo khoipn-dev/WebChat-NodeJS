@@ -65,10 +65,13 @@ let initRoutes = (app) => {
   route.get("/contact/find-user/:keyword", auth.checkLogin, contactValid.findUserContact, contact.findUserContact);
   route.post("/contact/add-new", auth.checkLogin, contact.addNew);
   route.delete("/contact/remove-request-contact", auth.checkLogin, contact.removeRequest);
-  
+  route.get("/contact/read-more-contacts", auth.checkLogin, contact.readMoreContacts);
+  route.get("/contact/read-more-contacts-sent", auth.checkLogin, contact.readMoreContactsSent);
+  route.get("/contact/read-more-contacts-received", auth.checkLogin, contact.readMoreContactsReceived);
+
   route.get("/notifications/read-more", auth.checkLogin, notification.readMore);
   route.put("/notifications/mark-all-as-read", auth.checkLogin, notification.markAllNotificationAsRead);
   
   return app.use("/", route);
-}
+};
  module.exports = initRoutes;
