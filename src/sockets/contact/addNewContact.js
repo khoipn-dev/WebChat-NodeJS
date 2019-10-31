@@ -17,7 +17,8 @@ let addNewContact = io => {
       let currentUser = {
         id: socket.request.user._id,
         username: socket.request.user.username,
-        avatar: socket.request.user.avatar
+        avatar: socket.request.user.avatar,
+        address: (socket.request.user.address !== 0) ? socket.request.user.address : "",
       };
 
       // Nếu người dùng có ID = contactId online
