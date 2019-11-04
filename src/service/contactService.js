@@ -68,6 +68,19 @@ let removeRequest = (currentUserId, contactId) => {
   });
 };
 
+let removeInvitation= (currentUserId, contactId) => {
+  return new Promise(async (resolve, reject) => {
+    let removeReq = await ContactModel.removeInvitation(currentUserId, contactId);
+    if (removeReq.n === 0) {
+      reject(false);
+    }
+
+    // Xoá notification
+    //await NotificationModel.model.removeInvitationContactNotification(currentUserId, contactId, NotificationModel.types.ADD_CONTACT);
+    resolve(true);
+  });
+};
+
 let getContacts = (currentUserId) => {
   return new Promise(async (resolve, reject) => {
     try {
@@ -206,6 +219,7 @@ module.exports = {
   findUserContact,
   addNew,
   removeRequest,
+  removeInvitation,
   getContacts,
   getContactsSent,
   getContactsReceived,

@@ -65,6 +65,7 @@ let initRoutes = (app) => {
   route.get("/contact/find-user/:keyword", auth.checkLogin, contactValid.findUserContact, contact.findUserContact);
   route.post("/contact/add-new", auth.checkLogin, contact.addNew);
   route.delete("/contact/remove-request-contact", auth.checkLogin, contact.removeRequest);
+  route.delete("/contact/remove-invitation-contact", auth.checkLogin, contact.removeInvitation);
   route.get("/contact/read-more-contacts", auth.checkLogin, contact.readMoreContacts);
   route.get("/contact/read-more-contacts-sent", auth.checkLogin, contact.readMoreContactsSent);
   route.get("/contact/read-more-contacts-received", auth.checkLogin, contact.readMoreContactsReceived);

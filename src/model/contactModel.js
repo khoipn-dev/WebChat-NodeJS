@@ -45,6 +45,12 @@ ContactSchema.statics = {
     }).exec();
   },
 
+  removeInvitation(userId, contactId) {
+    return this.deleteOne({
+      $and: [{ userId: contactId }, { contactId: userId }]
+    }).exec();
+  },
+
   getContacts(userId, limit) {
     return this.find({
       $and: [
