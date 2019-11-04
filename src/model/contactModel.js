@@ -41,14 +41,20 @@ ContactSchema.statics = {
    */
   removeRequest(userId, contactId) {
     return this.deleteOne({
-      $and: [{ userId: userId }, { contactId: contactId }]
+      $and: [{ userId: userId }, { contactId: contactId }, { status: false }]
     }).exec();
   },
 
   removeInvitation(userId, contactId) {
     return this.deleteOne({
-      $and: [{ userId: contactId }, { contactId: userId }]
+      $and: [{ userId: contactId }, { contactId: userId }, { status: false }]
     }).exec();
+  },
+
+  acceptInvitation(userId, contactId) {
+    return this.updateOne({
+      $and: [{ userId: contactId }, { contactId: userId }, { status: false }]
+    }, { status: true }).exec();
   },
 
   getContacts(userId, limit) {

@@ -81,6 +81,26 @@ let removeInvitation= (currentUserId, contactId) => {
   });
 };
 
+let acceptInvitation= (currentUserId, contactId) => {
+  return new Promise(async (resolve, reject) => {
+    let acceptReq = await ContactModel.acceptInvitation(currentUserId, contactId);
+
+    if (acceptReq.nModified === 0) {
+      reject(false);
+    }
+
+    // Tạo notification
+    let newNotificationItem = {
+      senderID: currentUserId,
+      receiverID: contactId,
+      type: NotificationModel.types.ACCEPT_CONTACT
+    };
+
+    await NotificationModel.model.createNew(newNotificationItem);
+    resolve(true);
+  });
+};
+
 let getContacts = (currentUserId) => {
   return new Promise(async (resolve, reject) => {
     try {
@@ -220,6 +240,7 @@ module.exports = {
   addNew,
   removeRequest,
   removeInvitation,
+  acceptInvitation,
   getContacts,
   getContactsSent,
   getContactsReceived,
