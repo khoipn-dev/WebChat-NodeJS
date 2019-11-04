@@ -74,7 +74,8 @@ NotificationSchema.statics = {
 };
 
 const NOTIFICATION_TYPES = {
-  ADD_CONTACT: "add_contact"
+  ADD_CONTACT: "add_contact",
+  ACCEPT_CONTACT: "accept_contact"
 };
 
 const NOTIFICATION_CONTENTS = {
@@ -89,6 +90,19 @@ const NOTIFICATION_CONTENTS = {
       return `<div data-uid="${sender._id}">
               <img class="avatar-small" src="images/users/${sender.avatar}" alt=""> 
               <strong>${sender.username}</strong> đã gửi cho bạn lời mời kết bạn!
+            </div>`;
+    }
+
+    if (notificationType === NOTIFICATION_TYPES.ACCEPT_CONTACT) {
+      if (!isRead) {
+        return `<div class="noti-readed-false" data-uid="${sender._id}">
+              <img class="avatar-small" src="images/users/${sender.avatar}" alt=""> 
+              <strong>${sender.username}</strong> đã chấp nhận lời mời kết bạn của bạn!
+            </div>`;
+      }
+      return `<div data-uid="${sender._id}">
+              <img class="avatar-small" src="images/users/${sender.avatar}" alt=""> 
+              <strong>${sender.username}</strong> đã chấp nhận lời mời kết bạn của bạn!
             </div>`;
     }
 

@@ -197,7 +197,7 @@ label:focus,
 .contactPanel .user-talk,
 .contactPanel .user-remove-contact,
 .contactPanel .user-remove-request-contact,
-.contactPanel .user-acccept-contact-received,
+.contactPanel .user-accept-contact-received,
 .contactPanel .user-remove-invitation-contact {
   box-sizing: border-box;
   display: inline-flex;
