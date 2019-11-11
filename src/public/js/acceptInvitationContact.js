@@ -22,6 +22,8 @@ function acceptInvitationContact() {
 
                     decreaseNumberNotification("noti_contact_counter",1);
 
+                    removeContact();
+
                     socket.emit("accept-invitation-contact", {contactId: targetId});
                 }
             }
@@ -68,6 +70,7 @@ socket.on("response-accept-invitation-contact", (user) => {
                                   </div>
                               </li>`;
     $("#contacts").find("ul").prepend(userInfoHTML);
+    removeContact();
 });
 
 $(document).ready(function () {

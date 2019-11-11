@@ -66,6 +66,7 @@ let initRoutes = (app) => {
   route.post("/contact/add-new", auth.checkLogin, contact.addNew);
   route.delete("/contact/remove-request-contact", auth.checkLogin, contact.removeRequest);
   route.delete("/contact/remove-invitation-contact", auth.checkLogin, contact.removeInvitation);
+  route.delete("/contact/remove-contact", auth.checkLogin, contact.removeContact);
   route.put("/contact/accept-invitation-contact", auth.checkLogin, contact.acceptInvitation);
   route.get("/contact/read-more-contacts", auth.checkLogin, contact.readMoreContacts);
   route.get("/contact/read-more-contacts-sent", auth.checkLogin, contact.readMoreContactsSent);

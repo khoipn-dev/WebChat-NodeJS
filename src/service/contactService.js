@@ -54,6 +54,15 @@ let addNew = (currentUserId, contactId) => {
   });
 };
 
+let removeContact = (currentUserId, contactId) => {
+  return new Promise(async (resolve, reject) => {
+    let removeContact = await ContactModel.removeContact(currentUserId, contactId);
+    if (removeContact.n === 0) {
+      reject(false);
+    }
+    resolve(true);
+  });
+};
 
 let removeRequest = (currentUserId, contactId) => {
   return new Promise(async (resolve, reject) => {
@@ -238,6 +247,7 @@ let readMoreContactsReceived = (currentUserId, skipNumber) => {
 module.exports = {
   findUserContact,
   addNew,
+  removeContact,
   removeRequest,
   removeInvitation,
   acceptInvitation,
