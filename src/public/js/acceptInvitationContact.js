@@ -12,7 +12,7 @@ function acceptInvitationContact() {
                     $(userInfo).find("div.user-accept-contact-received").remove();
                     $(userInfo).find("div.user-remove-invitation-contact").remove();
                     $(userInfo).find("div.contactPanel").append(`<div class="user-talk" data-uid="${targetId}">Trò chuyện</div>
-                                                                <div class="user-remove-contact action-danger" data-uid="<%= user._id %>">Xóa liên hệ</div>`);
+                                                                <div class="user-remove-contact action-danger" data-uid="${targetId}">Xóa liên hệ</div>`);
 
                     let userInfoHTML = userInfo.get(0).outerHTML;
                     $("#contacts").find("ul").prepend(userInfoHTML);
@@ -21,6 +21,8 @@ function acceptInvitationContact() {
                     increaseNumberNotiContact("count-contacts");
 
                     decreaseNumberNotification("noti_contact_counter",1);
+
+                    removeContact();
 
                     socket.emit("accept-invitation-contact", {contactId: targetId});
                 }
@@ -68,6 +70,7 @@ socket.on("response-accept-invitation-contact", (user) => {
                                   </div>
                               </li>`;
     $("#contacts").find("ul").prepend(userInfoHTML);
+    removeContact();
 });
 
 $(document).ready(function () {
