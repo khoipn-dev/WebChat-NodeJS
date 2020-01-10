@@ -14,11 +14,11 @@ let getAllConversationItems = (currentUserId) => {
             let userConversationsPromise = contacts.map(async (contact) => {
                 if (contact.contactId == currentUserId) {
                     let getUserContact = await UserModel.getUserData(contact.userId);
-                    getUserContact.createdAt = contact.createdAt;
+                    getUserContact.updatedAt = contact.updatedAt;
                     return getUserContact;
                 } else {
                     let getUserContact = await UserModel.getUserData(contact.contactId);
-                    getUserContact.createdAt = contact.createdAt;
+                    getUserContact.updatedAt = contact.updatedAt;
                     return getUserContact;
                 }
             });
@@ -27,9 +27,9 @@ let getAllConversationItems = (currentUserId) => {
             let groupConversations = await ChatGroupModel.getChatGroups(currentUserId, LIMIT_CONVERSATIONS);
             let allConversations = userConversations.concat(groupConversations);
 
-            // Sắp xếp theo createdAt
+            // Sắp xếp theo updatedAt
             allConversations = _.sortBy(allConversations, (item) => {
-                return -item.createdAt;
+                return -item.updatedAt;
             });
 
             resolve({
