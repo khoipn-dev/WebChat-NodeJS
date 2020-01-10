@@ -1,4 +1,4 @@
-import { notification, contact } from "./../service";
+import { notification, contact, message } from "./../service";
 
 let getHome = async function(req, res) {
   // Lấy 10 thông báo mới nhất
@@ -25,6 +25,10 @@ let getHome = async function(req, res) {
   // Tổng số yêu cầu kết bạn đã nhận
   let countContactsReceived = await contact.countContactsReceived(req.user._id);
 
+  let getAllConversationItems = await message.getAllConversationItems(req.user._id);
+  let userConversations = getAllConversationItems.userConversations;
+  let groupConversations = getAllConversationItems.groupConversations;
+  let allConversations = getAllConversationItems.allConversations;
 
   res.render("main/home/home", {
     errors: req.flash("errors"),
@@ -38,6 +42,9 @@ let getHome = async function(req, res) {
     countContacts: countContacts,
     countContactsSent: countContactsSent,
     countContactsReceived: countContactsReceived,
+    userConversations: userConversations,
+    groupConversations: groupConversations,
+    allConversations: allConversations,
   });
 };
 
