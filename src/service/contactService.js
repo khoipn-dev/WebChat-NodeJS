@@ -3,7 +3,7 @@ import UserModel from "./../model/userModel";
 import NotificationModel from "./../model/notificationModel";
 import _ from "lodash";
 
-const LIMIT_CONTACT = 1;
+const LIMIT_CONTACT = 10;
 
 let findUserContact = (currentUserId, keyword) => {
   return new Promise(async (resolve, reject) => {
