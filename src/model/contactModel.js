@@ -63,7 +63,7 @@ ContactSchema.statics = {
   acceptInvitation(userId, contactId) {
     return this.updateOne({
       $and: [{ userId: contactId }, { contactId: userId }, { status: false }]
-    }, { status: true }).exec();
+    }, { status: true, updatedAt: Date.now() }).exec();
   },
 
   getContacts(userId, limit) {
@@ -74,7 +74,7 @@ ContactSchema.statics = {
           {contactId: userId}
         ]}
         , {status: true}]
-    }).sort({createdAt: -1}).limit(limit).exec();
+    }).sort({updatedAt: -1}).limit(limit).exec();
   },
 
   getContactsSent(userId, limit) {
@@ -120,7 +120,7 @@ ContactSchema.statics = {
             {contactId: userId}
           ]}
         , {status: true}]
-    }).sort({createdAt: -1}).skip(skipNumber).limit(limit).exec();
+    }).sort({updatedAt: -1}).skip(skipNumber).limit(limit).exec();
   },
 
   readMoreContactsSent(userId, skipNumber, limit) {
