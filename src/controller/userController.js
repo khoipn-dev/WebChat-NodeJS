@@ -43,7 +43,7 @@ let updateAvatar = (req, res) => {
       let userUpdate = await user.updateUser(req.user._id, updateUserItem);
 
       // Xoá avatar cũ, userUpdate là user cũ chưa update
-      await fsExtra.remove(`${app.avatar_directory}/${userUpdate.avatar}`);
+      // await fsExtra.remove(`${app.avatar_directory}/${userUpdate.avatar}`);
 
       let result = {
         message: transSuccess.user_info_updated,

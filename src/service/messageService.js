@@ -1,10 +1,12 @@
 import ContactModel from "../model/contactModel";
 import UserModel from "../model/userModel";
 import ChatGroupModel from "../model/chatGroupModel";
+import MessageModel from "../model/messageModel";
 import _ from "lodash";
 import it from "../public/bower_components/moment/src/locale/it";
 
 const LIMIT_CONVERSATIONS = 15;
+const LIMIT_MESSAGES = 30;
 
 let getAllConversationItems = (currentUserId) => {
     return new Promise(async (resolve, reject) => {
@@ -32,10 +34,22 @@ let getAllConversationItems = (currentUserId) => {
                 return -item.updatedAt;
             });
 
+            let allConversationWithMessagesPromise = allConversations.map(async (conversation) => {
+               let getMessages = await MessageModel.model.getMessages(currentUserId, conversation._id, LIMIT_MESSAGES);
+               conversation = conversation.toObject();
+               conversation.messages = getMessages;
+               return conversation;
+            });
+
+            let allConversationWithMessages = await Promise.all(allConversationWithMessagesPromise);
+            // Sắp xếp lại theo updatedAt
+            allConversationWithMessages = _.sortBy(allConversationWithMessages, (item) => { return -item.updatedAt;});
+
             resolve({
                 userConversations,
                 groupConversations,
-                allConversations
+                allConversations,
+                allConversationWithMessages
             });
         } catch (error) {
             reject(error);
