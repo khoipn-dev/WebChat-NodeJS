@@ -36,7 +36,7 @@ const CONVERSATION_TYPE = {
 };
 
 MessageSchema.statics = {
-  getMessages(senderId, receiverId, limit) {
+  getPersonalMessages(senderId, receiverId, limit) {
     return this.find({
       $or: [
           { $and: [
@@ -47,7 +47,11 @@ MessageSchema.statics = {
               ]}
       ]
     }).sort({createdAt: 1}).limit(limit).exec();
-  }
+  },
+
+  getGroupMessages(receiverId, limit) {
+    return this.find({ receiverId: receiverId }).sort({createdAt: 1}).limit(limit).exec();
+  },
 };
 
 module.exports = {
