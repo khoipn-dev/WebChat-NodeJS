@@ -45,12 +45,7 @@ let getAllConversationItems = (currentUserId) => {
             // Sắp xếp lại theo updatedAt
             allConversationWithMessages = _.sortBy(allConversationWithMessages, (item) => { return -item.updatedAt;});
 
-            resolve({
-                userConversations,
-                groupConversations,
-                allConversations,
-                allConversationWithMessages
-            });
+            resolve(allConversationWithMessages);
         } catch (error) {
             reject(error);
         }
