@@ -48,7 +48,7 @@ let initPassportGoogle = () => {
   // Được gọi bởi passport.session()
   // return userInfo gán vào req.user 
   passport.deserializeUser((id, done) => {
-    UserModel.findUserById(id)
+    UserModel.findUserByIdForSession(id)
       .then(user => {
         return done(null, user);
       })
