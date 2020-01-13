@@ -52,6 +52,10 @@ UserSchema.statics = {
     return this.findById(id).exec();
   },
 
+  findUserByIdForSession(id) {
+    return this.findById(id, { 'local.password': 0, "local.verifyToken": 0 }).exec();
+  },
+
   getUserData(id) {
     return this.findById(id, {_id: 1, username: 1, address: 1, avatar: 1}).exec();
   },
