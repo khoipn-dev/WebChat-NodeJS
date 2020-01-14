@@ -36,6 +36,10 @@ const CONVERSATION_TYPE = {
 };
 
 MessageSchema.statics = {
+  createNew(item) {
+    return this.create(item);
+  },
+
   getPersonalMessages(senderId, receiverId, limit) {
     return this.find({
       $or: [

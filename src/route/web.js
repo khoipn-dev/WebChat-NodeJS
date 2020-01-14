@@ -1,6 +1,6 @@
 import express from "express";
-import {home, auth, user, contact, notification} from "./../controller/index";
-import {authValid, userValid, contactValid} from "./../validation/index";
+import {home, auth, user, contact, notification, message} from "./../controller/index";
+import {authValid, userValid, contactValid, messageValid} from "./../validation/index";
 import initPassportLocal from "./../controller/passportController/local";
 import initPassportFacebook from "./../controller/passportController/facebook";
 import initPassportGoogle from "./../controller/passportController/google";
@@ -74,6 +74,8 @@ let initRoutes = (app) => {
 
   route.get("/notifications/read-more", auth.checkLogin, notification.readMore);
   route.put("/notifications/mark-all-as-read", auth.checkLogin, notification.markAllNotificationAsRead);
+
+  route.post("/message/send", auth.checkLogin, messageValid.checkMessageLength, message.addNewMessage);
   
   return app.use("/", route);
 };

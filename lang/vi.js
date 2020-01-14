@@ -8,6 +8,7 @@ export const transValidation = {
   update_address: "Địa chỉ giới hạn trong 3-40 kí tự",
   update_phone: "Số điện thoại bắt đầu bằng số 0, giới hạn trong khoảng 10-11 số",
   keyword_find_user: "Lỗi từ khoá tìm kiếm, chỉ cho phép chữ cái và số , cho phép khoảng trắng",
+  message_incorrect: "Tin nhắn không hợp lệ. Tối thiểu 1 ký tự. Tối đa 500 ký tự"
 };
 
 export const transError = {
@@ -20,7 +21,8 @@ export const transError = {
   server_error: "Có lỗi ở phía server. Vui lòng liên hệ với bộ phận hỗ trợ của chúng tôi. Xin cảm ơn",
   avatar_type: "Kiểu file không hợp lệ. Chỉ chấp nhận png & jpg",
   avatar_size: "Tối đa cho phép là 1MB",
-  user_current_password_failed: "Mật khẩu hiện tại không chính xác"
+  user_current_password_failed: "Mật khẩu hiện tại không chính xác",
+  conversation_not_found: "Cuộc trò chuyện không tồn tại",
 };
 
 export const transSuccess = {

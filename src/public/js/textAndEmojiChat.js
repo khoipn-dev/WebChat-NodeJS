@@ -2,15 +2,15 @@ function textAndEmojiChat(inputChatId) {
     $(".emojionearea").unbind("keyup").on("keyup", function (element) {
         if (element.which === 13) {
             let targetId = $(`#write-chat-${inputChatId}`).data("chat");
-            let message = $(`#write-chat-${inputChatId}`).val();
+            let messageContent = $(`#write-chat-${inputChatId}`).val();
 
-            if (!targetId || !message.length) {
+            if (!targetId || !messageContent.length) {
                 return false;
             }
 
             let dataForSend = {
                 uid: targetId,
-                message: message
+                messageContent: messageContent
             };
 
             if ($(`#write-chat-${inputChatId}`).hasClass("chat-in-group")) {
@@ -19,8 +19,10 @@ function textAndEmojiChat(inputChatId) {
 
             $.post("/message/send", dataForSend, function (data) {
                 // Success
+                console.log(data);
             }).fail(function (res) {
                 //Fail
+                alertify.notify(res.responseText, "error", 3);
             })
         }
     })
