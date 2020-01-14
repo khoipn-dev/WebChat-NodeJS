@@ -16,6 +16,7 @@
     "tests"
   ],
   "dependencies": {
-    "bower_components": "https://github.com/khoipn-dev/bower-library-web-chat.git"
+    "bower_components": "https://github.com/khoipn-dev/bower-library-web-chat.git",
+    "emojione": "^4.5.0"
   }
 }
