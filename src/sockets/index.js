@@ -3,6 +3,7 @@ import removeRequestContact from "./contact/removeRequestContact";
 import removeInvitationContact from "./contact/removeInvitationContact";
 import acceptInvitationContact from "./contact/acceptInvitationContact";
 import removeContact from "./contact/removeContact";
+import sendMessage from "./chat/sendMessage";
 
 /**
  * 
@@ -14,6 +15,7 @@ let initSockets = (io) => {
   removeInvitationContact(io);
   acceptInvitationContact(io);
   removeContact(io);
+  sendMessage(io);
 };
 
 module.exports = initSockets;
