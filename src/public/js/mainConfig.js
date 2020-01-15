@@ -25,20 +25,25 @@ function nineScrollRight(divId) {
   $(`.right .chat[data-chat = ${divId}]`).scrollTop($(`.right .chat[data-chat = ${divId}]`)[0].scrollHeight);
 }
 
-function enableEmojioneArea(chatId) {
-  $('.write-chat[data-chat="' + chatId + '"]').emojioneArea({
+function enableEmojioneArea(inputChatId) {
+  $(`#write-chat-${inputChatId}`).emojioneArea({
     standalone: false,
     pickerPosition: 'top',
     filtersPosition: 'bottom',
     tones: false,
-    autocomplete: false,
+    autocomplete: true,
     inline: true,
     hidePickerOnBlur: true,
     search: false,
     shortnames: false,
     events: {
+      // Gắn giá trị vào thẻ input bị ẩn
       keyup: function(editor, event) {
-        $('.write-chat').val(this.getText());
+        $(`#write-chat-${inputChatId}`).val(this.getText());
+      },
+      // Bật listen DOM khi click vào input( Lắng nghe event keyup enter để gửi tin nhắn )
+      click: function () {
+        textAndEmojiChat(inputChatId);
       }
     },
   });
@@ -160,14 +165,27 @@ function changeTypeChat () {
 
 function changeScreenChat() {
   $(".room-chat").unbind("click").on("click", function () {
+    let divId = $(this).find('li').data('chat');
+
     $(".person").removeClass("active");
-    $(this).find("li").addClass("active");
+    $(`.person[data-chat=${divId}]`).addClass("active");
     $(this).tab("show");
 
     //Cấu hình thanh cuộn khung chat
-    let divId = $(this).find('li').data('chat');
     nineScrollRight(divId);
+
+    // Bật emoji, tham số truyền vào là id của box nhập nội dung tin nhắn
+    enableEmojioneArea(divId);
   })
+}
+
+function convertEmoji() {
+  $(".convert-emoji").each(function() {
+    var original = $(this).html();
+    // use .shortnameToImage if only converting shortnames (for slightly better performance)
+    var converted = emojione.toImage(original);
+    $(this).html(converted);
+  });
 }
 
 $(document).ready(function() {
@@ -179,9 +197,6 @@ $(document).ready(function() {
 
   // Cấu hình thanh cuộn
   nineScrollLeft();
-
-  // Bật emoji, tham số truyền vào là id của box nhập nội dung tin nhắn
-  enableEmojioneArea("17071995");
 
   // Icon loading khi chạy ajax
   ajaxLoading();
@@ -205,5 +220,9 @@ $(document).ready(function() {
   // Thay đổi màn hình chat
   changeScreenChat();
 
-  $("ul.people").find("li")[0].click();
+  //Convert unicode thành emoji icon
+  convertEmoji();
+
+  $("ul.people").find("a")[0].click();
+
 });

@@ -134,6 +134,16 @@ ContactSchema.statics = {
       $and: [{contactId: userId}, {status: false}]
     }).sort({createdAt: -1}).skip(skipNumber).limit(limit).exec();
   },
+  updateWhenHasNewMessage(userId, contactId) {
+    return this.findOneAndUpdate({
+      $or: [
+        { $and: [{ userId: userId }, { contactId: contactId }] },
+        { $and: [{ userId: contactId }, { contactId: userId }] }
+      ]
+    }, {
+      updatedAt: Date.now()
+    }).exec();
+  }
 
 };
 
