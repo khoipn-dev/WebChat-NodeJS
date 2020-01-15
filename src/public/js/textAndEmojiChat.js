@@ -56,7 +56,14 @@ function textAndEmojiChat(inputChatId) {
                 });
                 $(`.person[data-chat=${targetId}]`).trigger("event.moveConversationToTop");
 
+                // check nếu có typing gif thì chuyển xuống dưới
+                let checkTypingExist = $(`.chat[data-chat=${targetId}]`).find('div.bubble-typing-gif');
+                if (checkTypingExist.length) {
+                    $(`.chat[data-chat=${targetId}]`).append(checkTypingExist);
+                }
+
                 // Emit socket
+                typingOff(targetId);
                 socket.emit("send-message", dataForEmit);
 
             }).fail(function (res) {
