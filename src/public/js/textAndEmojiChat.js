@@ -21,17 +21,17 @@ function textAndEmojiChat(inputChatId) {
             $.post("/message/send", dataForSend, function (data) {
                 // Success
                 let myMessage = $(`<div class="bubble me" data-mess-id="${data.message._id}"></div>`);
+                myMessage.text(data.message.text);
+                let converted = emojione.toImage(myMessage.text());
 
                 if (dataForSend.isGroup) {
-                    myMessage.html(`<img src="/images/users/${data.message.sender.avatar}" class="avatar-small" title="${data.message.sender.name}">`);
-                    myMessage.text(data.message.text);
+                    let senderAvatar = `<img src="/images/users/${data.message.sender.avatar}" class="avatar-small" title="${data.message.sender.name}">`;
+                    myMessage.html(`${senderAvatar} ${converted}`);
                 } else {
-                    myMessage.text(data.message.text);
+                    myMessage.html(converted);
                 }
 
                 // append tin nhắn
-                let converted = emojione.toImage(myMessage.text());
-                myMessage.html(converted);
                 $(`.right .chat[data-chat=${targetId}]`).append(myMessage);
                 nineScrollRight(targetId);
 
