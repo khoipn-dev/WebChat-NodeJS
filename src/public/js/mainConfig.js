@@ -44,6 +44,10 @@ function enableEmojioneArea(inputChatId) {
       // Bật listen DOM khi click vào input( Lắng nghe event keyup enter để gửi tin nhắn )
       click: function () {
         textAndEmojiChat(inputChatId);
+        typingOn(inputChatId);
+      },
+      blur: function () {
+        typingOff(inputChatId);
       }
     },
   });
