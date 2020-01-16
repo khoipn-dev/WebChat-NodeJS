@@ -32,7 +32,7 @@ let updateAvatar = (req, res) => {
       if (error.message) {
         return res.status(500).send(transError.avatar_size);
       }
-      return res.status(500).send(transError.avatar_type);
+      return res.status(500).send(error);
     }
     try {
       let updateUserItem = {

@@ -77,6 +77,7 @@ let initRoutes = (app) => {
 
   route.post("/message/send", auth.checkLogin, messageValid.checkMessageLength, message.addNewMessage);
   route.post("/message/image", auth.checkLogin, message.addNewImage);
+  route.post("/message/attachment", auth.checkLogin, message.addNewAttachment);
 
   return app.use("/", route);
 };
