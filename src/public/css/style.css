@@ -22,9 +22,9 @@ body {
   text-rendering: optimizeLegibility;
   font-family: 'Quicksand', sans-serif;
   font-weight: 400;
-  background-image: url(https://lh4.googleusercontent.com/-XplyTa1Za-I/VMSgIyAYkHI/AAAAAAAADxM/oL-rD6VP4ts/w1184-h666/Android-Lollipop-wallpapers-Google-Now-Wallpaper-2.png);
+  /*background-image: url(https://lh4.googleusercontent.com/-XplyTa1Za-I/VMSgIyAYkHI/AAAAAAAADxM/oL-rD6VP4ts/w1184-h666/Android-Lollipop-wallpapers-Google-Now-Wallpaper-2.png);*/
   background-size: cover;
-  background-repeat: none;
+  /*background-repeat: none;*/
 }
 
 .alertify-notifier .ajs-message.ajs-error {
@@ -839,9 +839,9 @@ label:focus,
   flex-direction: column;
 }
 
-#image-chat,
-#attach-chat {
-  display: none;
+.image-chat,
+.attach-chat {
+  display: none !important;
 }
 
 .room-chat:hover,
