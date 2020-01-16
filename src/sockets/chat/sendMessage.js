@@ -77,6 +77,37 @@ let sendMessage = io => {
 
         });
 
+        socket.on("send-attachment-message", async (data) => {
+            if (data.groupId) {
+                let response = {
+                    groupId: data.groupId,
+                    senderId: socket.request.user._id,
+                    message: data.message
+                };
+
+                let chatGroup = await ChatGroupModel.getChatGroupById(data.groupId);
+
+                chatGroup.members.forEach(member => {
+                    if (member.userId != socket.request.user._id && clients[member.userId]) {
+                        emitNotiToUser(clients, member.userId, io, "response-send-attachment-message", response);
+                    }
+                });
+            }
+
+            if (data.contactId) {
+                let response = {
+                    senderId: socket.request.user._id,
+                    message: data.message
+                };
+                // Nếu người dùng có ID = contactId online
+                if (clients[data.contactId]) {
+                    // Emit cho từng socketId của người dùng có ID = contactId
+                    emitNotiToUser(clients, data.contactId, io, "response-send-attachment-message", response);
+                }
+            }
+
+        });
+
         socket.on("disconnect", () => {
             clients = removeSocketIDFromArray(
                 clients,
