@@ -1,5 +1,9 @@
 import { validationResult } from "express-validator";
 import { message } from "../service";
+import multer from "multer";
+import {app} from "../config/app";
+import {transError} from "../../lang/vi";
+import fsExtra from"fs-extra";
 
 let addNewMessage = async (req, res) => {
     let errorArr = [];
@@ -31,6 +35,54 @@ let addNewMessage = async (req, res) => {
     }
 };
 
+let $StorageImageMessage = multer.diskStorage({
+    destination: (req, file, callback) => {
+        callback(null, app.image_message_directory);
+    },
+    filename: (req, file, callback) => {
+        let math = app.image_message_type;
+        if (math.indexOf(file.mimetype) === -1) {
+            return callback(transError.image_message_type);
+        }
+
+        let $ImageName = file.originalname;
+        callback(null, $ImageName);
+    }
+});
+
+let imageMessageUpload = multer({
+    storage: $StorageImageMessage,
+    limits: { fileSize: app.image_message_limit_size }
+}).single("image-message");
+
+let addNewImage = (req, res) => {
+    imageMessageUpload(req, res , async (error) => {
+        if (error) {
+            if (error.message) {
+                return res.status(500).send(transError.avatar_size);
+            }
+            return res.status(500).send(transError.avatar_type);
+        }
+
+        try {
+            let sender = {
+                id: req.user._id,
+                name: req.user.username,
+                avatar: req.user.avatar
+            };
+            let receiverId = req.body.uid;
+            let messageContent = req.file;
+            let isGroup = req.body.isGroup;
+            let newMessage = await message.addNewImageMessage(sender, receiverId, messageContent, isGroup);
+            await fsExtra.remove(`${app.image_message_directory}/${newMessage.file.fileName}`);
+            res.status(200).send({message: newMessage});
+        } catch (error) {
+            res.status(500).send(error);
+        }
+    });
+};
+
 module.exports = {
-    addNewMessage
+    addNewMessage,
+    addNewImage
 };

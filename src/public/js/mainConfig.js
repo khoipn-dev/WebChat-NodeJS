@@ -96,6 +96,7 @@ function configNotification() {
 function gridPhotos(layoutNumber) {
   $(".show-images").unbind("click").on("click", function () {
     let modalImageId = $(this).attr("href");
+    let originalData = $(modalImageId).find("div.modal-body").html();
 
     let countRows = Math.ceil($(modalImageId).find("div.all-images>img").length / layoutNumber);
     let layoutStr = new Array(countRows).fill(layoutNumber).join("");
@@ -115,6 +116,11 @@ function gridPhotos(layoutNumber) {
           maxWidth: "90%"
         });
       }
+    });
+
+    // Bắt sự kiêjn đóng modal hình ảnh
+    $(modalImageId).on("hidden.bs.modal", function () {
+      $(this).find("div.modal-body").html(originalData);
     });
   });
 }
@@ -180,6 +186,9 @@ function changeScreenChat() {
 
     // Bật emoji, tham số truyền vào là id của box nhập nội dung tin nhắn
     enableEmojioneArea(divId);
+
+    // Lắng nghe chat image
+    chatImage(divId);
   })
 }
 

@@ -76,7 +76,8 @@ let initRoutes = (app) => {
   route.put("/notifications/mark-all-as-read", auth.checkLogin, notification.markAllNotificationAsRead);
 
   route.post("/message/send", auth.checkLogin, messageValid.checkMessageLength, message.addNewMessage);
-  
+  route.post("/message/image", auth.checkLogin, message.addNewImage);
+
   return app.use("/", route);
 };
  module.exports = initRoutes;
