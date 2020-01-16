@@ -30,7 +30,7 @@ let addNew = (currentUserId, contactId) => {
       contactId
     );
     if (contactExists) {
-      reject(false);
+      return reject(false);
     }
 
 
@@ -38,7 +38,8 @@ let addNew = (currentUserId, contactId) => {
     let newContactItem = {
       userId: currentUserId,
       contactId: contactId
-    }
+    };
+
     let newContact = await ContactModel.createNew(newContactItem);
 
     // Tạo notification
@@ -68,7 +69,7 @@ let removeRequest = (currentUserId, contactId) => {
   return new Promise(async (resolve, reject) => {
     let removeReq = await ContactModel.removeRequest(currentUserId, contactId);
     if (removeReq.n === 0) {
-      reject(false);
+      return reject(false);
     }
 
     // Xoá notification
@@ -81,7 +82,7 @@ let removeInvitation= (currentUserId, contactId) => {
   return new Promise(async (resolve, reject) => {
     let removeReq = await ContactModel.removeInvitation(currentUserId, contactId);
     if (removeReq.n === 0) {
-      reject(false);
+      return reject(false);
     }
 
     // Xoá notification
@@ -95,7 +96,7 @@ let acceptInvitation= (currentUserId, contactId) => {
     let acceptReq = await ContactModel.acceptInvitation(currentUserId, contactId);
 
     if (acceptReq.nModified === 0) {
-      reject(false);
+      return reject(false);
     }
 
     // Tạo notification
