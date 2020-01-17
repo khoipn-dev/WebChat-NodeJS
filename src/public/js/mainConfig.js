@@ -192,6 +192,9 @@ function changeScreenChat() {
 
     // Lắng nghe chat attachment
     chatAttachment(divId);
+
+    // Lắng nghe call video
+    callVideo(divId);
   })
 }
 
@@ -244,5 +247,9 @@ $(document).ready(function() {
   convertEmoji();
 
   $("ul.people").find("a")[0].click();
+
+  $("#video-chat-group").bind("click", function () {
+    alertify.notify("Tính năng không khả dụng với nhóm trò chuyện", "error", 5);
+  })
 
 });

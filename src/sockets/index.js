@@ -5,6 +5,7 @@ import acceptInvitationContact from "./contact/acceptInvitationContact";
 import removeContact from "./contact/removeContact";
 import sendMessage from "./chat/sendMessage";
 import typingRealtime from "./chat/typingRealtime";
+import callVideo from "./chat/callVideo";
 
 /**
  * 
@@ -18,6 +19,7 @@ let initSockets = (io) => {
   removeContact(io);
   sendMessage(io);
   typingRealtime(io);
+  callVideo(io);
 };
 
 module.exports = initSockets;
