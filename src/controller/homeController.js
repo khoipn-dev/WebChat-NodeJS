@@ -5,34 +5,33 @@ import request from "request";
 let getIceServer = () => {
     return new Promise(async (resolve, reject) => {
       // Node Get ICE STUN and TURN list
-      let o = {
-        format: "urls"
-      };
-
-      let bodyString = JSON.stringify(o);
-      let options = {
-        url: "https://global.xirsys.net/_turn/eChat",
-        // host: "global.xirsys.net",
-        // path: "/_turn/eChat",
-        method: "PUT",
-        headers: {
-          "Authorization": "Basic " + Buffer.from("khoipndev:2e26955a-390f-11ea-a4cb-0242ac110004").toString("base64"),
-          "Content-Type": "application/json",
-          "Content-Length": bodyString.length
-        }
-      };
-
-      request(options, (error, response, body) => {
-        if (error) {
-          console.log("Error when get ice server");
-          return reject(error);
-        }
-
-        let bodyJson = JSON.parse(body);
-        resolve(bodyJson.v.iceServers);
+      // let o = {
+      //   format: "urls"
+      // };
+      //
+      // let bodyString = JSON.stringify(o);
+      // let options = {
+      //   url: "https://global.xirsys.net/_turn/eChat",
+      //   // host: "global.xirsys.net",
+      //   // path: "/_turn/eChat",
+      //   method: "PUT",
+      //   headers: {
+      //     "Authorization": "Basic " + Buffer.from("khoipndev:2e26955a-390f-11ea-a4cb-0242ac110004").toString("base64"),
+      //     "Content-Type": "application/json",
+      //     "Content-Length": bodyString.length
+      //   }
+      // };
+      //
+      // request(options, (error, response, body) => {
+      //   if (error) {
+      //     console.log("Error when get ice server");
+      //     return reject(error);
+      //   }
+      //
+      //   let bodyJson = JSON.parse(body);
+      //   resolve(bodyJson.v.iceServers);
+      resolve([]);
       });
-
-    });
 };
 
 let getHome = async function(req, res) {
