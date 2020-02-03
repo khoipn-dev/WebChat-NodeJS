@@ -1,5 +1,4 @@
 socket.on("server-send-list-user-online", function (listUserIdOnline) {
-    console.log(listUserIdOnline);
     listUserIdOnline.forEach(function (userId) {
         let $LiElement = $(`.person[data-chat=${userId}]`);
         $LiElement.find("div.dot").addClass("online");

@@ -7,6 +7,7 @@ import sendMessage from "./chat/sendMessage";
 import typingRealtime from "./chat/typingRealtime";
 import callVideo from "./chat/callVideo";
 import userOnlineOffline from "./status/userOnlineOffline";
+import newGroupChat from "./group/newGroupChat";
 
 /**
  * 
@@ -22,6 +23,7 @@ let initSockets = (io) => {
   typingRealtime(io);
   callVideo(io);
   userOnlineOffline(io);
+  newGroupChat(io);
 };
 
 module.exports = initSockets;

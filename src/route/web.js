@@ -1,6 +1,6 @@
 import express from "express";
-import {home, auth, user, contact, notification, message} from "./../controller/index";
-import {authValid, userValid, contactValid, messageValid} from "./../validation/index";
+import {home, auth, user, contact, notification, message, groupChat} from "./../controller/index";
+import {authValid, userValid, contactValid, messageValid, groupChatValid} from "./../validation/index";
 import initPassportLocal from "./../controller/passportController/local";
 import initPassportFacebook from "./../controller/passportController/facebook";
 import initPassportGoogle from "./../controller/passportController/google";
@@ -63,6 +63,7 @@ let initRoutes = (app) => {
   
   // Tìm kiếm thêm bạn bè
   route.get("/contact/find-user/:keyword", auth.checkLogin, contactValid.findUserContact, contact.findUserContact);
+  route.get("/contact/search-friend/:keyword", auth.checkLogin, contactValid.findUserContact, contact.searchFriend);
   route.post("/contact/add-new", auth.checkLogin, contact.addNew);
   route.delete("/contact/remove-request-contact", auth.checkLogin, contact.removeRequest);
   route.delete("/contact/remove-invitation-contact", auth.checkLogin, contact.removeInvitation);
@@ -78,6 +79,7 @@ let initRoutes = (app) => {
   route.post("/message/send", auth.checkLogin, messageValid.checkMessageLength, message.addNewMessage);
   route.post("/message/image", auth.checkLogin, message.addNewImage);
   route.post("/message/attachment", auth.checkLogin, message.addNewAttachment);
+  route.post("/group-chat/create-group", auth.checkLogin, groupChatValid.addNewGroupChat, groupChat.addNewGroupChat);
 
   return app.use("/", route);
 };

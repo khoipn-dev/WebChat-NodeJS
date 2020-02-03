@@ -107,6 +107,26 @@ UserSchema.statics = {
       },
       {_id: 1, username: 1, address: 1, avatar: 1}
     ).exec();
+  },
+
+  findUserForAddChatGroup(friendIds, keyword) {
+    return this.find(
+      {
+        $and: [
+          { _id: { $in: friendIds } },
+          { "local.isActive": true },
+          {
+            $or: [
+              { username: { $regex: new RegExp(keyword, "i") } },
+              { "local.email": keyword },
+              { "google.email": keyword },
+              { "facebook.email": keyword }
+            ]
+          }
+        ]
+      },
+      {_id: 1, username: 1, address: 1, avatar: 1}
+    ).exec();
   }
 };
 

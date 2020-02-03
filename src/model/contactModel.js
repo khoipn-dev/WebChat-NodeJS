@@ -77,6 +77,17 @@ ContactSchema.statics = {
     }).sort({updatedAt: -1}).limit(limit).exec();
   },
 
+  getFriend(userId) {
+    return this.find({
+      $and: [
+        {$or: [
+            {userId: userId},
+            {contactId: userId}
+          ]}
+        , {status: true}]
+    }).sort({updatedAt: -1}).exec();
+  },
+
   getContactsSent(userId, limit) {
     return this.find({
       $and: [{userId: userId}, {status: false}]
