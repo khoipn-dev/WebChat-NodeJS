@@ -168,9 +168,21 @@ $(document).ready(function () {
     socket.on("server-send-accept-request-call-to-listener", function (response) {
         Swal.close();
         clearInterval(timeInterval);
-        let getUserMedia = (navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia).bind(navigator);
+        navigator.getUserMedia = ( navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia || navigator.msGetUserMedia);
         peer.on("call", function(call) {
-            getUserMedia({video: true, audio: true}, function(stream) {
+            if (navigator.getUserMedia) {
+                navigator.getUserMedia({
+                    video: true,
+                    audio: true
+                }, connectToCaller, errorAccessUserMedia);
+            } else {
+                navigator.mediaDevices.getUserMedia({
+                    video: true,
+                    audio: true
+                }).then(connectToCaller).catch(errorAccessUserMedia);
+            }
+
+            function connectToCaller(stream) {
                 // mở modal stream
                 $("#streamModal").modal("show");
                 // Hiện thị video local-stream
@@ -193,15 +205,7 @@ $(document).ready(function () {
                     showPopupWhenEndCallVideo(response.callerName);
                     call.close();
                 });
-            }, function(err) {
-                if (err.toString() === "NotAllowedError: Permission denied") {
-                    alertify.notify("Không có quyền truy cập camera và microphone", "error", 5);
-                }
-
-                if (err.toString() === "NotFoundError: Requested device not found") {
-                    alertify.notify("Không tìm thấy camera và microphone", "error", 5);
-                }
-            });
+            }
         });
     });
 
@@ -209,8 +213,19 @@ $(document).ready(function () {
         Swal.close();
         clearInterval(timeInterval);
         //Connect
-        let getUserMedia = (navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia).bind(navigator);
-        getUserMedia({video: true, audio: true}, function(stream) {
+        navigator.getUserMedia = (navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia || navigator.msGetUserMedia);
+        if (navigator.getUserMedia) {
+            navigator.getUserMedia({
+                video: true,
+                audio: true
+            }, connectToListener, errorAccessUserMedia);
+        } else {
+            navigator.mediaDevices.getUserMedia({
+                video: true,
+                audio: true
+            }).then(connectToListener).catch(errorAccessUserMedia);
+        }
+        function connectToListener(stream) {
             // mở modal stream
             $("#streamModal").modal("show");
             // Hiện thị video local-stream
@@ -235,15 +250,7 @@ $(document).ready(function () {
                 showPopupWhenEndCallVideo(response.listenerName);
                 call.close();
             });
-        }, function(err) {
-            if (err.toString() === "NotAllowedError: Permission denied") {
-                alertify.notify("Không có quyền truy cập camera và microphone", "error", 5);
-            }
-
-            if (err.toString() === "NotFoundError: Requested device not found") {
-                alertify.notify("Không tìm thấy camera và microphone", "error", 5);
-            }
-        });
+        }
 
     });
 
@@ -259,4 +266,14 @@ function showPopupWhenEndCallVideo(username) {
         confirmButtonColor: "#2ECC71",
         confirmButtonText: "Xác nhận",
     });
+}
+
+function errorAccessUserMedia(err) {
+    if (err.toString() === "NotAllowedError: Permission denied") {
+        alertify.notify("Không có quyền truy cập camera và microphone", "error", 5);
+    }
+
+    if (err.toString() === "NotFoundError: Requested device not found") {
+        alertify.notify("Không tìm thấy camera và microphone", "error", 5);
+    }
 }
