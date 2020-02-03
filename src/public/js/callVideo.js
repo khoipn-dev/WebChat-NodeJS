@@ -40,7 +40,7 @@ $(document).ready(function () {
         secure: true,
         port: 443,
         config: { "iceServers": iceServerList},
-        debug: 3
+        // debug: 3
     });
     peer.on("open", function (PeerId) {
         peerId = PeerId;
