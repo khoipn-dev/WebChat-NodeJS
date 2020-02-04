@@ -4,7 +4,7 @@ import multer from "multer";
 import {app} from "../config/app";
 import {transError} from "../../lang/vi";
 import fsExtra from"fs-extra";
-import {getLastItemOfArray, timeStampToHumanTime, bufferToBase64} from "./../helpers/clientHelper";
+import {bufferToBase64} from "./../helpers/clientHelper";
 import ejs from "ejs";
 import {promisify} from "util";
 
@@ -160,9 +160,33 @@ let readMoreAllChat = async (req, res) => {
     }
 };
 
+let readMore = async (req, res) => {
+    try {
+        let skipMessage = +(req.query.skipMessage);
+        let targetId = req.query.targetId;
+        let isChatGroup = (req.query.isChatGroup === "true");
+
+
+        let nextMessage = await message.readMore(req.user._id, skipMessage, targetId, isChatGroup);
+        let dataForRender = {
+            user: req.user,
+            nextMessage,
+            bufferToBase64
+        };
+        let rightSideHTML = await renderFile("src/views/main/readMoreMessage/_rightSide.ejs", dataForRender);
+        let imageModalHTML = await renderFile("src/views/main/readMoreMessage/_imageModal.ejs", dataForRender);
+        let attachmentModalHTML = await renderFile("src/views/main/readMoreMessage/_attachmentModal.ejs", dataForRender);
+
+        return res.status(200).send({rightSideHTML, imageModalHTML, attachmentModalHTML});
+    } catch (error) {
+        return res.status(500).send(error);
+    }
+};
+
 module.exports = {
     addNewMessage,
     addNewImage,
     addNewAttachment,
-    readMoreAllChat
+    readMoreAllChat,
+    readMore
 };
