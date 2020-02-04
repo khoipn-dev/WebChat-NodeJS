@@ -227,9 +227,59 @@ let addNewAttachmentMessage = (sender, receiverId, messageContent, isGroup) => {
         }
     });
 };
+
+let readMoreAllChat = (currentUserId, skipPersonal, skipGroup) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            let contacts = await ContactModel.readMoreContacts(currentUserId, skipPersonal, LIMIT_CONVERSATIONS);
+
+            let userConversationsPromise = contacts.map(async (contact) => {
+                if (contact.contactId == currentUserId) {
+                    let getUserContact = await UserModel.getUserData(contact.userId);
+                    getUserContact.updatedAt = contact.updatedAt;
+                    return getUserContact;
+                } else {
+                    let getUserContact = await UserModel.getUserData(contact.contactId);
+                    getUserContact.updatedAt = contact.updatedAt;
+                    return getUserContact;
+                }
+            });
+
+            let userConversations = await Promise.all(userConversationsPromise);
+            let groupConversations = await ChatGroupModel.readMoreChatGroups(currentUserId, skipGroup, LIMIT_CONVERSATIONS);
+            let allConversations = userConversations.concat(groupConversations);
+
+            // Sắp xếp theo updatedAt
+            allConversations = _.sortBy(allConversations, (item) => {
+                return -item.updatedAt;
+            });
+
+            let allConversationWithMessagesPromise = allConversations.map(async (conversation) => {
+                conversation = conversation.toObject();
+                if (conversation.members) {
+                    let getMessages = await MessageModel.model.getGroupMessages(conversation._id, LIMIT_MESSAGES);
+                    conversation.messages = _.reverse(getMessages);
+                } else {
+                    let getMessages = await MessageModel.model.getPersonalMessages(currentUserId, conversation._id, LIMIT_MESSAGES);
+                    conversation.messages = _.reverse(getMessages);
+                }
+                return conversation;
+            });
+
+            let allConversationWithMessages = await Promise.all(allConversationWithMessagesPromise);
+            // Sắp xếp lại theo updatedAt
+            allConversationWithMessages = _.sortBy(allConversationWithMessages, (item) => { return -item.updatedAt;});
+
+            resolve(allConversationWithMessages);
+        } catch (error) {
+            reject(error);
+        }
+    })
+};
 module.exports = {
     getAllConversationItems,
     addNewMessage,
     addNewImageMessage,
-    addNewAttachmentMessage
+    addNewAttachmentMessage,
+    readMoreAllChat
 };
