@@ -79,6 +79,7 @@ let initRoutes = (app) => {
   route.post("/message/send", auth.checkLogin, messageValid.checkMessageLength, message.addNewMessage);
   route.post("/message/image", auth.checkLogin, message.addNewImage);
   route.post("/message/attachment", auth.checkLogin, message.addNewAttachment);
+  route.get("/message/read-more-all-chat", auth.checkLogin, message.readMoreAllChat);
   route.post("/group-chat/create-group", auth.checkLogin, groupChatValid.addNewGroupChat, groupChat.addNewGroupChat);
 
   return app.use("/", route);

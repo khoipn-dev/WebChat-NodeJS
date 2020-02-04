@@ -1,9 +1,15 @@
 import { validationResult } from "express-validator";
-import { message } from "../service";
+import {contact, message} from "../service";
 import multer from "multer";
 import {app} from "../config/app";
 import {transError} from "../../lang/vi";
 import fsExtra from"fs-extra";
+import {getLastItemOfArray, timeStampToHumanTime, bufferToBase64} from "./../helpers/clientHelper";
+import ejs from "ejs";
+import {promisify} from "util";
+
+// Chuyển function ejs.renderFile thành promise
+const renderFile = promisify(ejs.renderFile).bind(ejs);
 
 // Xử lý tin nhắn văn bản và emoji
 let addNewMessage = async (req, res) => {
@@ -129,8 +135,34 @@ let addNewAttachment = (req, res) => {
     });
 };
 
+let readMoreAllChat = async (req, res) => {
+    try {
+        let skipPersonal = +(req.query.skipPersonal);
+        let skipGroup = +(req.query.skipGroup);
+
+        let nextAllChat = await message.readMoreAllChat(req.user._id, skipPersonal, skipGroup);
+        let dataForRender = {
+            user: req.user,
+            nextAllChat,
+            getLastItemOfArray,
+            timeStampToHumanTime,
+            bufferToBase64
+        };
+
+        let leftSideHTML = await renderFile("src/views/main/readMoreConversation/_leftSide.ejs", dataForRender);
+        let rightSideHTML = await renderFile("src/views/main/readMoreConversation/_rightSide.ejs", dataForRender);
+        let imageModalHTML = await renderFile("src/views/main/readMoreConversation/_imageModal.ejs", dataForRender);
+        let attachmentModalHTML = await renderFile("src/views/main/readMoreConversation/_attachmentModal.ejs", dataForRender);
+
+        return res.status(200).send({leftSideHTML, rightSideHTML, imageModalHTML, attachmentModalHTML});
+    } catch (error) {
+        return res.status(500).send(error);
+    }
+};
+
 module.exports = {
     addNewMessage,
     addNewImage,
-    addNewAttachment
+    addNewAttachment,
+    readMoreAllChat
 };
