@@ -276,10 +276,31 @@ let readMoreAllChat = (currentUserId, skipPersonal, skipGroup) => {
         }
     })
 };
+
+let readMore = (currentUserId, skipMessage, targetId, isChatGroup) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            if (isChatGroup) {
+                let getMessages = await MessageModel.model.readMoreGroupMessages(targetId, skipMessage, LIMIT_MESSAGES);
+                getMessages = _.reverse(getMessages);
+                return resolve(getMessages);
+            }
+
+            let getMessages = await MessageModel.model.readMorePersonalMessages(currentUserId, targetId, skipMessage, LIMIT_MESSAGES);
+            getMessages = _.reverse(getMessages);
+            return resolve(getMessages);
+
+        } catch (error) {
+            reject(error);
+        }
+    })
+};
+
 module.exports = {
     getAllConversationItems,
     addNewMessage,
     addNewImageMessage,
     addNewAttachmentMessage,
-    readMoreAllChat
+    readMoreAllChat,
+    readMore
 };

@@ -80,6 +80,7 @@ let initRoutes = (app) => {
   route.post("/message/image", auth.checkLogin, message.addNewImage);
   route.post("/message/attachment", auth.checkLogin, message.addNewAttachment);
   route.get("/message/read-more-all-chat", auth.checkLogin, message.readMoreAllChat);
+  route.get("/message/read-more", auth.checkLogin, message.readMore);
   route.post("/group-chat/create-group", auth.checkLogin, groupChatValid.addNewGroupChat, groupChat.addNewGroupChat);
 
   return app.use("/", route);
